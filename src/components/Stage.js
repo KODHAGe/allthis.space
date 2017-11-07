@@ -17,34 +17,35 @@ class Stage extends Component {
     let items = this.state.items;  
     this.db.collection('stage').get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
-        items.push(doc.data());
+        let data = doc.data();
+        data.key = doc.id;
+        items.push(data);
       });
-      
       this.setState(items);      
     });
   }
   placeLink(event) {
     var clickCoordinates = [event.clientX - 30, event.clientY - 80];
-    
     this.db.collection('stage').add({
       name: 'cool',
       storageUrl: 'cooler',
       position: clickCoordinates
-    }).then(function(docRef) {
+    }).then((docRef) => {
       console.log("Document written with ID: ", docRef.id);
+      let items = this.state.items;
+      items.push({'key:': docRef, 'name':'New note', 'storageUrl': null, 'position': clickCoordinates});
+      this.setState(items);
+      console.log(this.state);
     })
     .catch(function(error) {
       console.error("Error adding document: ", error);
     });
-
-    let items = this.state.items;
-    items.push({'name':'cool', 'storageUrl': 'cooler', 'position': clickCoordinates});
-    this.setState(items);
   }
   render() {
     const items = this.state.items.map((item) => (
       <Item
-        key={item.name + Date.now()}
+        key={item.key}
+        id={item.key}
         name={item.name}
         positionX={item.position[0]}
         positionY={item.position[1]}
