@@ -1,7 +1,28 @@
 .Item {
-  background-color:#eee;
+  background-color:#ddd;
   border: solid black 1px;
   display:inline-block;
   padding: 1rem;
   position: absolute;
+}
+
+.Item-closebutton {
+  position: absolute;
+  right: 0.25em;
+  top: 0;
+  font-size: 2em;
+}
+
+.Item-closebutton:hover {
+  cursor: pointer;
+}
+
+.Item-textarea {
+  width: 100%;
+  background-color:#eee;
+}
+
+.Item-image {
+  width: 100%;
+  max-width: 400px;
 }
